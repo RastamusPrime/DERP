@@ -2,12 +2,20 @@ angular.module('myDerp', [])
 
 .controller('derpCtrl',["$scope","$http", function(s, h)
 {
-      var onDerpComplete = function(response)
+       onDerpComplete = function(response)
       {
             s.user = response.data;
       };
 
-      h.get("https://api.github.com/users/rastamusprime")
-      .then(onDerpComplete);
+      onError = function(reason){
+            s.error = "You're an Idoit!!!<br />Put in a real person.";
+      };
 
+      s.search = function(username){
+      h.get("https://api.github.com/users/" + username)
+      .then(onDerpComplete, onError);
+
+      s.username="angular";
+      s.message= "GO ROOOOOOOYYAAALS!";
+};
 }]);
